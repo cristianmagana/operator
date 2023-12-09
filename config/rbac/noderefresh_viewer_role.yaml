@@ -1,0 +1,27 @@
+# permissions for end users to view noderefreshes.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: noderefresh-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: operator
+    app.kubernetes.io/part-of: operator
+    app.kubernetes.io/managed-by: kustomize
+  name: noderefresh-viewer-role
+rules:
+- apiGroups:
+  - refresh.lab.com
+  resources:
+  - noderefreshes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - refresh.lab.com
+  resources:
+  - noderefreshes/status
+  verbs:
+  - get

@@ -1,0 +1,12 @@
+apiVersion: refresh.lab.com/v1
+kind: NodeRefresh
+metadata:
+  labels:
+    app.kubernetes.io/name: noderefresh
+    app.kubernetes.io/instance: noderefresh-sample
+    app.kubernetes.io/part-of: operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: operator
+  name: noderefresh-sample
+spec:
+  # TODO(user): Add fields here

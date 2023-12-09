@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- refresh_v1_noderefresh.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples
