@@ -12,14 +12,14 @@ import (
 )
 
 type Release struct {
-	// Name of the release
-	Name string
-	// Version of the release
-	EksVersion string
-	// Architecture of the release
-	Architecture string
-	// Value of the release
-	Value string
+	// Details of the release
+	Details string
+	// ClusterVersion of the release
+	ClusterVersion string
+	// NodeArchitecture of the release
+	NodeArchitecture string
+	// ReleaseValue of the release
+	ReleaseValue string
 }
 
 type SSMGetParameterAPI interface {
@@ -55,7 +55,7 @@ func (r *Release) GetRelease() (*Release, error) {
 
 	parameterName := getArchitectureRelease(&currentEksVersion, &nodeArchitecture)
 
-	cfg, err := config.LoadDefaultConfig(context.TODO())
+	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion("us-east-1"))
 	if err != nil {
 		panic("configuration error, " + err.Error())
 	}
@@ -73,13 +73,23 @@ func (r *Release) GetRelease() (*Release, error) {
 	}
 
 	release := Release{
-		Name:         fmt.Sprintf("LATEST RELEASE AS OF %s", time.Now().Format(time.RFC850)),
-		EksVersion:   currentEksVersion,
-		Architecture: nodeArchitecture,
-		Value:        *results.Parameter.Value,
+		Details:          fmt.Sprintf("LATEST RELEASE AS OF %s", time.Now().Format(time.RFC850)),
+		ClusterVersion:   currentEksVersion,
+		NodeArchitecture: nodeArchitecture,
+		ReleaseValue:     *results.Parameter.Value,
 	}
 
 	slog.Info(*results.Parameter.Value)
 
 	return &release, nil
 }
+
+// func main() {
+// 	var release *Release
+// 	release, err := release.GetRelease()
+// 	if err != nil {
+// 		slog.Error(err.Error())
+// 		return
+// 	}
+// 	slog.Debug("Release: " + release.ReleaseValue)
+// }

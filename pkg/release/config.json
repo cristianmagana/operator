@@ -1,0 +1,11 @@
+[
+    {
+        "ParameterName": "aws/service/eks/optimized-ami/1.28/amazon-linux-2-arm64/recommended/release_version",
+        "Value": "1.28.7-20231209"
+    },
+    {
+        "ParameterName": "aws/service/eks/optimized-ami/1.28/amazon-linux-2/recommended/release_version",
+        "Value": "1.28.7-20231209"
+        
+    }
+]
