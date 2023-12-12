@@ -11,6 +11,12 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/ssm"
 )
 
+type SSMGetParameterAPI interface {
+	GetParameter(ctx context.Context,
+		params *ssm.GetParameterInput,
+		optFns ...func(*ssm.Options)) (*ssm.GetParameterOutput, error)
+}
+
 type Release struct {
 	// Details of the release
 	Details string
@@ -20,12 +26,6 @@ type Release struct {
 	NodeArchitecture string
 	// ReleaseValue of the release
 	ReleaseValue string
-}
-
-type SSMGetParameterAPI interface {
-	GetParameter(ctx context.Context,
-		params *ssm.GetParameterInput,
-		optFns ...func(*ssm.Options)) (*ssm.GetParameterOutput, error)
 }
 
 func findParameter(c context.Context, api SSMGetParameterAPI, input *ssm.GetParameterInput) (*ssm.GetParameterOutput, error) {
@@ -83,13 +83,3 @@ func (r *Release) GetRelease() (*Release, error) {
 
 	return &release, nil
 }
-
-// func main() {
-// 	var release *Release
-// 	release, err := release.GetRelease()
-// 	if err != nil {
-// 		slog.Error(err.Error())
-// 		return
-// 	}
-// 	slog.Debug("Release: " + release.ReleaseValue)
-// }
